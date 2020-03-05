@@ -18,6 +18,35 @@ def deps do
 end
 ```
 
+## Usage
+
+* Get [elastic/elasticsearch/.../rest-api-spec/api](https://github.com/elastic/elasticsearch/tree/master/rest-api-spec/src/main/resources/rest-api-spec/api) to repository directory.
+
+* Play with it :) 
+
+```
+ex_es$ iex -S mix
+Erlang/OTP 22 [erts-10.6.4] [source] [64-bit] [smp:12:12] [ds:12:12:10] [async-threads:1] [hipe]
+
+Interactive Elixir (1.10.2) - press Ctrl+C to exit (type h() ENTER for help)
+iex(1)> h ExEs.Cat        
+
+                                    ExEs.Cat                                    
+
+Generated Elasticsearch client
+iex(3)> h ExEs.Cat.nodes
+
+                                  def nodes()                                   
+
+Returns basic statistics about performance of cluster nodes.
+
+iex(4)> 
+```
+
+***Note: those are dummy modules and fuctions so far.***
+
+##
+
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/ex_es](https://hexdocs.pm/ex_es).
