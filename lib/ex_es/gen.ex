@@ -15,13 +15,16 @@ defmodule ExEs.Gen do
       # generate top level functions
       for function <- Map.get(names_grouped, "rest") do
         Module.put_attribute(__MODULE__, :doc, {0, ExEs.Gen.get_docs(specs, function)})
-        def unquote(String.to_atom(function))() do
+        def unquote(String.to_atom(function))(unquote(ExEs.Gen.get_params(specs, function) |> Map.keys() |> ExEs.Gen.make_params(__MODULE__))) do
           String.to_atom(unquote(function))
         end
       end
       # remove what's processed
       names_grouped = Map.delete(names_grouped, "rest")
-      # generate nested modules and their functions
+      # * generate nested modules and their functions
+      # * for returns, which is not necessary here. could be that `Enum.each` would be
+      #   better here?
+      # * this won't traverse Map recursively, now it's not needed though.
       for {module, functions} <- Map.to_list(names_grouped) do
         defmodule Module.concat(__MODULE__, String.capitalize(module)) do
           Module.put_attribute(__MODULE__, :moduledoc, {0, ExEs.Gen.get_moduledocs()})
@@ -36,6 +39,29 @@ defmodule ExEs.Gen do
     end
   end
 
+  # TODO: a lot of duplication in those functions
+  def get_params(data, function) when is_map(data) and is_bitstring(function) do
+    Map.get(data, function)
+    |> Map.get("params")
+  end
+  def get_params(data, {module, function}) when is_map(data) do
+    Map.get(data, module <> "." <> function)
+    |> Map.get("params")
+  end
+  def make_params(keys, module) do
+    # do I like this syntax more?
+    keys
+    |> Enum.map(
+      fn k ->
+        k
+        |> String.to_atom()
+        |> Macro.var(module)
+      end
+    )
+  end
+  # use for `@spec` later. "specify" in "make it @spec-able" sense ;)
+  def specify_param_type() do
+  end
   def get_moduledocs() do
     "Generated Elasticsearch client"
   end
