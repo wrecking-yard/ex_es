@@ -3,7 +3,6 @@ defmodule ExEs.Docs do
     "Generated Elasticsearch client"
   end
   def get_function_docs(data, function) when is_map(data) and is_bitstring(function) do
-    IO.puts(function)
     function_specs = Map.get(data, function)
     Enum.map(["```"]
     ++ [function <> ":\n"]
@@ -12,7 +11,6 @@ defmodule ExEs.Docs do
     ++ ["```"], fn e -> e <> "\n" end) |> List.to_string()
   end
   def get_function_docs(data, {module, function}) when is_map(data) do
-    IO.puts(module <> "." <> function)
     function_specs = Map.get(data, module <> "." <> function)
     Enum.map(["```"]
     ++ [function <> ":\n"]
