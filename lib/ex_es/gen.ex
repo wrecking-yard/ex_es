@@ -1,7 +1,7 @@
 defmodule ExEs.Gen do
   defmacro __using__(options) do
     quote(bind_quoted: [options: options]) do
-      Module.put_attribute(__MODULE__, :moduledoc, {0, ExEs.Docs.get_moduledocs()})
+      @moduledoc ExEs.Docs.get_moduledocs()
       # TODO: * listing of the directory is not preserving file path
       #       * listing of the directory can contain non-files
       specs = Enum.map(options.dirs, fn dir -> Enum.map(File.ls!(dir), fn file -> file end) end)
@@ -14,10 +14,9 @@ defmodule ExEs.Gen do
 
       # generate top level functions
       for function <- Map.get(names_grouped, "rest") do
-        #Module.put_attribute(__MODULE__, :doc, {0, ExEs.Docs.get_function_docs(specs, function)})
         @doc ExEs.Docs.get_function_docs(specs, function)
-        def unquote(String.to_atom(function))(unquote(ExEs.Gen.make_params(__MODULE__))) do
-          nil
+        def unquote(String.to_atom(function))(params_list) do
+          ExEs.Router.proxy(String.to_atom(unquote(function)), params_list)
         end
       end
       # remove what's processed
@@ -28,11 +27,11 @@ defmodule ExEs.Gen do
       # * this won't traverse Map recursively, now it's not needed though.
       for {module, functions} <- Map.to_list(names_grouped) do
         defmodule Module.concat(__MODULE__, String.capitalize(module)) do
-          Module.put_attribute(__MODULE__, :moduledoc, {0, ExEs.Docs.get_moduledocs()})
+          @moduledoc ExEs.Docs.get_moduledocs()
           for function <- functions do
             Module.put_attribute(__MODULE__, :doc, {0, ExEs.Docs.get_function_docs(specs, {module, function})})
-            def unquote(String.to_atom(function))(unquote(ExEs.Gen.make_params(__MODULE__))) do
-              String.to_atom(unquote(function))
+            def unquote(String.to_atom(function))(params_list) do
+              ExEs.Router.proxy(String.to_atom(unquote(function)), params_list)
             end
           end
         end
