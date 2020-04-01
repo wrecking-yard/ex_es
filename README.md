@@ -24,24 +24,7 @@ end
 
 * Play with it :) 
 
-```
-ex_es$ iex -S mix
-Erlang/OTP 22 [erts-10.6.4] [source] [64-bit] [smp:12:12] [ds:12:12:10] [async-threads:1] [hipe]
-
-Interactive Elixir (1.10.2) - press Ctrl+C to exit (type h() ENTER for help)
-iex(1)> h ExEs.Cat        
-
-                                    ExEs.Cat                                    
-
-Generated Elasticsearch client
-iex(3)> h ExEs.Cat.nodes
-
-                                  def nodes()                                   
-
-Returns basic statistics about performance of cluster nodes.
-
-iex(4)> 
-```
+![](files/img/iex_help.png)
 
 ***Note: those are dummy modules and fuctions so far.***
 
