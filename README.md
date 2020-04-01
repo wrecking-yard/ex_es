@@ -51,3 +51,9 @@ Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_do
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at [https://hexdocs.pm/ex_es](https://hexdocs.pm/ex_es).
 
+## ~TODO~ Missing
+
+* `@doc`s are poorly formatted, and contain mostly "properties".
+* No `@spec`, no `@typedoc`, no `@type` definitions.
+* Code is a mess, function APIs are inconsistent.
+* No tests.
