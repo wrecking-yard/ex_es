@@ -53,7 +53,8 @@ be found at [https://hexdocs.pm/ex_es](https://hexdocs.pm/ex_es).
 
 ## ~TODO~ Missing
 
-* `@doc`s are poorly formatted, and contain mostly "properties".
+* `@doc`s are poorly formatted, and contain mostly function "params".
 * No `@spec`, no `@typedoc`, no `@type` definitions.
+* Not idiomatic, barely working :)
 * Code is a mess, function APIs are inconsistent.
 * No tests.
