@@ -29,7 +29,7 @@ defmodule ExEs.Gen do
         defmodule Module.concat(__MODULE__, String.capitalize(module)) do
           @moduledoc ExEs.Docs.get_moduledocs()
           for function <- functions do
-            Module.put_attribute(__MODULE__, :doc, {0, ExEs.Docs.get_function_docs(specs, {module, function})})
+            @doc ExEs.Docs.get_function_docs(specs, {module, function})
             def unquote(String.to_atom(function))(params_list) do
               ExEs.Router.proxy(String.to_atom(unquote(function)), params_list)
             end
@@ -85,11 +85,5 @@ defmodule ExEs.Gen do
   end
   def get_key(list) when length(list) > 1 do
     List.first(list)
-  end
-  def proxy(function, param_list) do
-    adapter(:http_client, {function, param_list})
-  end
-  def adapter(http_client, {facade_function, param_list}) do
-    nil
   end
 end
